@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Présentation de l'entreprise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --accent: #FF6B00;
+            --secondary: #333333;
+            --spacing: clamp(50px, 5vw, 100px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 1;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--text);
+        }
+
+        section {
+            padding: var(--spacing) 20px;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            list-style: disc;
+        }
+
+        ul ul {
+            margin-left: 1.5rem;
+            list-style: circle;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-item {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: var(--accent);
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--text);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger:focus {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: var(--bg);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        width: 200px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+    </style>
+</head>
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="index.html" class="nav-item">Accueil</a></li>
+        <li><a href="projets.html" class="nav-item">Projets</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title" style="color: var(--text);">Mon Entreprise</h1>
+            <p class="hero-subtitle" style="color: var(--accent);">Découvrez l'univers d'Orange</p>
+        </div>
+    </section>
+    
+    
+
+    <section class="content">
+        <h2>À propos d'Orange</h2>
+        <p>Orange, leader français des télécommunications, est une entreprise fondée en 1988 sous le nom de France Télécom avant de devenir Orange en 2013. Présente dans <span class="highlight">26 pays</span> à travers le monde, l’entreprise est un acteur clé des solutions numériques et de connectivité, offrant des services tels que la téléphonie, l’internet haut débit, la fibre optique, la 5G, et des solutions pour les entreprises.</p>
+        <p>Avec un chiffre d’affaires de <span class="highlight">44,1 milliards d’euros</span> en 2023 et une clientèle dépassant les <span class="highlight">298 millions</span>, Orange se distingue par son engagement envers l’innovation et la durabilité.</p>
+
+        <h2>Les Valeurs d'Orange</h2>
+        <p>Orange met l’accent sur trois valeurs fondamentales :</p>
+        <ul>
+            <li><span class="highlight">Innovation :</span> Développer des solutions technologiques de pointe pour répondre aux besoins du futur.</li>
+            <li><span class="highlight">Engagement :</span> Fournir des services fiables et sécurisés tout en respectant l’environnement.</li>
+            <li><span class="highlight">Proximité :</span> Être à l’écoute des clients pour offrir des solutions adaptées à leurs attentes.</li>
+        </ul>
+
+        <h2>Le Réseau Structurant d'Orange</h2>
+        <p>Le réseau structurant est l’ossature des télécommunications modernes. Grâce à des infrastructures robustes et évolutives, comme la fibre optique et la 5G, Orange garantit une transmission rapide et fiable des données, connectant les particuliers et les entreprises à travers le monde.</p>
+
+        <h2>L'UCI EST : Une Unité Clé</h2>
+        <p>L’<span class="highlight">Unité de Conduite de l’Intervention Est (UCI Est)</span>, rattachée à Orange Grand Nord-Est, joue un rôle crucial dans la gestion, la production et la maintenance des réseaux dans les régions Bourgogne-Franche-Comté et Alsace-Lorraine. Ses principales missions incluent :</p>
+        <ul>
+            <li>La supervision et l’entretien des infrastructures critiques, telles que les réseaux de fibre optique et de cuivre.</li>
+            <li>La gestion des interventions sur le terrain pour garantir la continuité des services.</li>
+            <li>Le développement de solutions adaptées aux besoins locaux des clients.</li>
+        </ul>
+
+        <h2>Orange et l'Engagement Environnemental</h2>
+        <p>Orange s’engage activement dans la réduction de son empreinte carbone et favorise l’utilisation de sources d’énergie renouvelable. À travers des initiatives comme la réutilisation des équipements réseaux et le recyclage des matériaux, l’entreprise montre son attachement à un avenir durable.</p>
+
+        <h2>Un Acteur Incontournable</h2>
+        <p>Avec ses technologies de pointe, ses valeurs fortes et son engagement envers la qualité, Orange reste un pilier incontournable du secteur des télécommunications. L’entreprise continue d’innover pour connecter le monde et relever les défis de demain.</p>
+    </section>
+</body>
+<script>
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+}
+</script>
+</html>

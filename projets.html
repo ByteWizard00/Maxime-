@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --accent: #FF6B00;
+            --secondary: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 1;
+            margin-bottom: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--accent);
+        }
+        .projects-section {
+    display: grid; /* Passe en mode grille */
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes de largeur égale */
+    gap: 30px; /* Espacement entre les bulles */
+    padding: 40px 20px; /* Ajoute de l’espace autour */
+    justify-items: center; /* Centre chaque élément dans sa colonne */
+}
+
+
+.project-card {
+    background: var(--secondary);
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* S'adapte automatiquement à la colonne */
+    max-width: 400px; /* Largeur maximale des bulles */
+    box-sizing: border-box; /* Inclut le padding dans la largeur totale */
+}
+
+
+
+
+
+.project-card:hover {
+    transform: translateY(-10px); /* Effet visuel au survol */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+}
+
+
+
+.project-description {
+    color: var(--text);
+    margin-top: 10px;
+    font-size: 1rem; /* Taille de texte plus lisible */
+    line-height: 1.6; /* Plus d'espacement entre les lignes */
+}
+
+.project-btn {
+    background: var(--accent);
+    color: var(--text);
+    border: none;
+    padding: 12px 25px; /* Bouton plus grand et mieux espacé */
+    border-radius: 30px; /* Boutons très arrondis pour une esthétique plus moderne */
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 1rem; /* Taille de texte plus lisible */
+    font-weight: 600; /* Texte légèrement plus gras pour le bouton */
+}
+
+.project-btn:hover {
+    background: rgba(255, 102, 0, 0.8); /* Garde l'effet au survol */
+    transform: scale(1.05); /* Légère mise en avant au survol */
+}
+
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .popup.active {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+        }
+
+        .popup-close {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-images img {
+            flex: 0 0 100%;
+            object-fit: cover;
+            width: 100%;
+            height: auto;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 102, 0, 0.7);
+            color: white;
+            border: none;
+            font-size: 2rem;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .carousel-button-prev {
+            left: 10px;
+        }
+
+        .carousel-button-next {
+            right: 10px;
+        }
+     /* Barre de navigation principale */
+     .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg);
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-item {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: var(--accent);
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    color: var(--text);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger:focus {
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: var(--bg);
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        width: 200px;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+
+
+    </style>
+</head>
+<nav class="navbar">
+    <ul class="nav-links">
+        <li><a href="index.html" class="nav-item">Accueil</a></li>
+        
+        <li><a href="entrepise.html" class="nav-item">Entreprise</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Mes Projets</h1>
+            <p class="hero-subtitle">Découvrez mes réalisations</p>
+        </div>
+    </section>
+   
+    
+    
+    <section class="projects-section">
+        <!-- Projet 1 -->
+        <div class="project-card">
+            <div class="project-description">
+                <p>
+                    Découvrez les coulisses de mon métier en alternance 🚧<br>
+                    Vous êtes curieux de savoir ce qui se cache derrière un réseau fiable et performant ?
+                </p>
+                <button class="project-btn" onclick="openPopup('carouselPopup')">Découvrez les coulisses</button>
+            </div>
+        </div>
+
+        <!-- Projet 2 -->
+        <div class="project-card">
+            <div class="project-description">
+                <p>
+                    Participez à l'avenir des télécommunications ! 🌐<br>
+                    Découvrez comment, durant mon alternance chez Orange, j'ai contribué au déploiement de la 5G.
+                </p>
+                <button class="project-btn" onclick="openPopup('popupProjet2')">Voir plus</button>
+            </div>
+        </div>
+
+        <!-- Projet 3 -->
+        <div class="project-card">
+            <div class="project-description">
+                <p>
+                    Vivez une immersion en gestion de crise 🌪️<br>
+                    Découvrez comment j'ai appris à réagir face à des situations critiques dans un environnement professionnel fictif.
+                </p>
+                <button class="project-btn" onclick="openPopup('popupProjet3')">En savoir plus</button>
+            </div>
+        </div>
+
+        <!-- Projet 4 -->
+    <div class="project-card">
+        <div class="project-description">
+            <p>
+                Une aventure collaborative en gestion de projet réseau 🌐<br>
+                Découvrez comment nous avons conçu et déployé une infrastructure réseau complexe dans le cadre de la SAE 5.01.
+            </p>
+            <button class="project-btn" onclick="openPopup('popupProjet4')">Explorer le projet</button>
+        </div>
+    </div>
+    <!-- Projet 5 -->
+<div class="project-card">
+    <div class="project-description">
+        <p>
+            Une visite inspirante à Télécom Paris 🎓<br>
+            Découvrez comment cette expérience a élargi mes horizons académiques et professionnels.
+        </p>
+        <button class="project-btn" onclick="openPopup('popupProjet5')">Explorer cette visite</button>
+    </div>
+</div>
+</section>
+
+
+</section>
+
+
+
+    
+    <!-- Popup Projet 1 -->
+    <div class="overlay" id="popupOverlay"></div>
+    <div class="popup" id="carouselPopup">
+        <div class="popup-header">
+            <span class="popup-title">Détails du Projet 1</span>
+            <button class="popup-close" onclick="closePopup()">&times;</button>
+        </div>
+        <div class="carousel-container">
+            <div class="carousel-images" id="carouselImages">
+                <img src="photo1.jpg" alt="Image 1">
+                <img src="photo2.jpg" alt="Image 2">
+                <img src="photo3.jpg" alt="Image 3">
+                <img src="photo4.jpg" alt="Image 4">
+                <img src="photo5.jpg" alt="Image 5">
+            </div>
+            <button class="carousel-button carousel-button-prev" onclick="prevSlide()">&#10094;</button>
+            <button class="carousel-button carousel-button-next" onclick="nextSlide()">&#10095;</button>
+        </div>
+    </div>
+
+    <!-- Popup Projet 2 -->
+    <div class="popup" id="popupProjet2" style="background-color: #1a1a1a; color: var(--text); border: 1px solid var(--accent); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);">
+        <div class="popup-header" style="border-bottom: 1px solid var(--accent); padding-bottom: 10px;">
+            <span class="popup-title">💼 Projet réalisé : Déploiement de la 5G chez Orange</span>
+            <button class="popup-close" onclick="closePopup()" style="background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer;">&times;</button>
+        </div>
+        <div class="popup-content" style="overflow-y: auto; max-height: 70vh; padding: 20px;">
+            
+    
+            <p><strong><span style="color: var(--accent);">🔎 Contexte :</span></strong></p>
+            <p>Lors de mon alternance chez Orange, acteur mondial des télécommunications, j’ai participé au <span style="color: var(--accent);">déploiement de la 5G</span>, un projet stratégique pour renforcer la connectivité et accompagner la transformation numérique. Ce projet a permis de répondre aux besoins croissants en bande passante, tout en préparant le terrain pour des innovations comme l’<span style="color: var(--accent);">IoT</span>, la <span style="color: var(--accent);">réalité augmentée</span> et les solutions à haut débit.</p>
+    
+            <p><strong><span style="color: var(--accent);">🔧 Missions effectuées :</span></strong></p>
+            <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+                <li><strong><span style="color: var(--accent);">Configuration</span> et paramétrage des équipements réseau Huawei :</strong>
+                    <ul style="margin-left: 20px; list-style-type: circle;">
+                        <li>Mise en place des <span style="color: var(--accent);">ATN910C-M</span>, un composant clé du déploiement 5G.</li>
+                        <li><span style="color: var(--accent);">Configuration</span> des interfaces GigabitEthernet et des liaisons 10 Gb/s via des modules SFP+ en utilisant l’outil <span style="color: var(--accent);">PuTTY</span>.</li>
+                    </ul>
+                </li>
+                <li><strong>Construction et installation des <span style="color: var(--accent);">infrastructures</span> :</strong>
+                    <ul style="margin-left: 20px; list-style-type: circle;">
+                        <li>Création de liaisons <span style="color: var(--accent);">fibre optique</span> pour connecter les équipements au réseau structurant d’Orange.</li>
+                        <li>Installation et intégration des équipements au pied des pylônes 5G, en suivant des procédures rigoureuses de déploiement.</li>
+                    </ul>
+                </li>
+                <li><strong>Tests et <span style="color: var(--accent);">maintenance</span> des équipements :</strong>
+                    <ul style="margin-left: 20px; list-style-type: circle;">
+                        <li>Vérification de la connectivité et réalisation de tests fonctionnels pour garantir une performance optimale.</li>
+                        <li>Suivi et <span style="color: var(--accent);">maintenance proactive</span> pour assurer la fiabilité du service sur le long terme.</li>
+                    </ul>
+                </li>
+            </ul>
+    
+            <p><strong><span style="color: var(--accent);">📈 Résultats obtenus :</span></strong></p>
+            <p>Amélioration de la couverture <span style="color: var(--accent);">5G</span> sur plusieurs zones stratégiques, favorisant une connectivité fiable et performante pour les utilisateurs finaux. Optimisation de l’<span style="color: var(--accent);">infrastructure réseau</span>, assurant une base solide pour les innovations futures en matière de télécommunications.</p>
+    
+            <p><strong><span style="color: var(--accent);">🌟 Compétences acquises :</span></strong></p>
+            <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+                <li><strong>Expertise technique :</strong> Maîtrise de la configuration des équipements réseau et des outils spécifiques (<span style="color: var(--accent);">PuTTY</span>, modules SFP+, etc.).</li>
+                <li><strong>Gestion de projet terrain :</strong> Respect des délais, coordination avec les équipes, et résolution des défis techniques.</li>
+                <li><strong>Capacité d’adaptation :</strong> Apprentissage rapide de nouvelles technologies et gestion d’imprévus sur le terrain.</li>
+            </ul>
+    
+            <p><strong><span style="color: var(--accent);">💡 Impact personnel :</span></strong></p>
+            <p>Participer au <span style="color: var(--accent);">déploiement de la 5G</span> m’a permis d’être acteur d’un projet d’envergure nationale et de contribuer directement à une avancée technologique majeure. J’ai renforcé ma compréhension des <span style="color: var(--accent);">infrastructures critiques</span> et consolidé mon envie de travailler dans le domaine des réseaux et télécommunications.</p>
+             <!-- Carrousel des images -->
+        <div class="carousel-container" style="position: relative; overflow: hidden; border-radius: 10px; margin-top: 20px;">
+            <div class="carousel-images" id="carouselImagesProjet2" style="display: flex; transition: transform 0.5s ease-in-out;">
+                <img src="Projet2-1.jpg" alt="Illustration du projet 2 - Image 1" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+                <img src="Projet2-2.jpg" alt="Illustration du projet 2 - Image 2" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+            </div>
+            <!-- Boutons de navigation (optionnels) -->
+            <button class="carousel-button carousel-button-prev" onclick="prevSlideProjet2()" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10094;</button>
+            <button class="carousel-button carousel-button-next" onclick="nextSlideProjet2()" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10095;</button>
+        </div>
+        </div>
+    </div>
+        <div class="popup-content">
+            <!-- Texte du projet 2 ici -->
+        </div>
+        
+    </div>
+
+    <!-- Popup Projet 3 -->
+    <div class="popup" id="popupProjet3" style="background-color: #1a1a1a; color: var(--text); border: 1px solid var(--accent); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);">
+        <div class="popup-header" style="border-bottom: 1px solid var(--accent); padding-bottom: 10px;">
+            <span class="popup-title">🎯 Immersion en gestion de crise : une expérience marquante</span>
+            <button class="popup-close" onclick="closePopup()" style="background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer;">&times;</button>
+        </div>
+        <div class="popup-content" style="overflow-y: auto; max-height: 70vh; padding: 20px;">
+            <p><strong><span style="color: var(--accent);">🔎 Contexte :</span></strong></p>
+            <p>Lors de ma formation, j’ai eu la chance de participer à une journée immersive dédiée à la <span style="color: var(--accent);">gestion de crise</span>, où nous étions plongés dans le quotidien d’une entreprise fictive. L’objectif ? Apprendre à réagir rapidement et efficacement face à des situations <span style="color: var(--accent);">critiques</span> et <span style="color: var(--accent);">imprévues</span>.</p>
+            
+            <p><strong><span style="color: var(--accent);">🌀 Les défis auxquels nous avons été confrontés :</span></strong></p>
+            <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+                <li><span style="color: var(--accent);">Priorisation des crises</span> : Plusieurs situations éclataient en même temps, et il fallait évaluer leur <span style="color: var(--accent);">gravité</span> pour décider lesquelles traiter immédiatement.</li>
+                <li><span style="color: var(--accent);">Communication avec les médias</span> : Nous avons organisé des conférences de presse pour répondre à des crises médiatisées, en veillant à <span style="color: var(--accent);">protéger l’image</span> de l’entreprise.</li>
+                <li><span style="color: var(--accent);">Collaboration avec les autorités</span> : Certaines crises impliquaient des interventions de la police, exigeant une <span style="color: var(--accent);">coordination étroite</span> tout en respectant la <span style="color: var(--accent);">confidentialité</span> des données.</li>
+                <li><span style="color: var(--accent);">Rédaction de rapports</span> : En parallèle, nous devions transmettre à la direction des comptes rendus <span style="color: var(--accent);">clairs</span> et <span style="color: var(--accent);">détaillés</span> dans des délais très courts.</li>
+            </ul>
+    
+            <p><strong><span style="color: var(--accent);">💡 Ce que j’ai appris :</span></strong></p>
+            <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+                <li><strong><span style="color: var(--accent);">Communication en situation de crise :</span></strong> Apprendre à s’exprimer <span style="color: var(--accent);">clairement</span>, à éviter les maladresses et à <span style="color: var(--accent);">protéger l’image</span> de l’entreprise face à des acteurs externes.</li>
+                <li><strong><span style="color: var(--accent);">Prise de décision sous pression :</span></strong> Analyser rapidement les situations pour agir efficacement.</li>
+                <li><strong><span style="color: var(--accent);">Travail en équipe et coordination :</span></strong> Répartition des rôles et <span style="color: var(--accent);">collaboration</span> pour gérer efficacement les crises.</li>
+            </ul>
+    
+            <p><strong><span style="color: var(--accent);">🌟 Pourquoi cette journée était importante :</span></strong></p>
+            <p>Elle m’a donné un aperçu concret des défis que peuvent rencontrer les entreprises en période de <span style="color: var(--accent);">crise</span>. Grâce à cet exercice, j’ai acquis des <span style="color: var(--accent);">outils</span> et des <span style="color: var(--accent);">réflexes</span> précieux pour aborder ces situations avec <span style="color: var(--accent);">stratégie</span> et <span style="color: var(--accent);">sérénité</span>.</p>
+            <div class="carousel-container" style="position: relative; overflow: hidden; border-radius: 10px; margin-top: 20px;">
+                <div class="carousel-images" id="carouselImagesProjet3" style="display: flex; transition: transform 0.5s ease-in-out;">
+                    <img src="Projet3-1.jpg" alt="Illustration du projet 3 - Image 1" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+                    <img src="Projet3-2.jpg" alt="Illustration du projet 3 - Image 2" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+                </div>
+                <!-- Boutons de navigation (optionnels) -->
+                <button class="carousel-button carousel-button-prev" onclick="prevSlideProjet3()" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10094;</button>
+                <button class="carousel-button carousel-button-next" onclick="nextSlideProjet3()" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10095;</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="popup" id="popupProjet4" style="background-color: #1a1a1a; color: var(--text); border: 1px solid var(--accent); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);">
+        <div class="popup-header" style="border-bottom: 1px solid var(--accent); padding-bottom: 10px;">
+            <span class="popup-title">🎯 SAE 5.01 : Une aventure collaborative en conception et gestion de projet réseau</span>
+            <button class="popup-close" onclick="closePopup()" style="background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer;">&times;</button>
+        </div>
+        <div class="popup-content" style="overflow-y: auto; max-height: 70vh; padding: 20px;">
+            <p>Je tiens à partager l’une des expériences les plus marquantes de ma formation : la <span style="color: var(--accent);">SAE 501</span>. Ce projet collectif nous a permis de concevoir et de déployer une <span style="color: var(--accent);">infrastructure réseau complexe</span> tout en intégrant une véritable <span style="color: var(--accent);">gestion de projet</span> pour assurer sa réussite dans un délai limité.</p>
+    
+            <p>Ensemble, notre mission était de répondre aux <span style="color: var(--accent);">besoins IT</span> d’une entreprise fictive en pleine expansion. Ce projet ne se limitait pas à l’aspect technique : il impliquait également une <span style="color: var(--accent);">coordination efficace</span> de l’équipe pour garantir la réalisation des objectifs dans les délais impartis.</p>
+    
+            <p><strong><span style="color: var(--accent);">🌐 Objectifs et Réalisations :</span></strong></p>
+            <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+                <li>Mise en place d'un <span style="color: var(--accent);">cœur de réseau</span> intégrant des <span style="color: var(--accent);">VLAN</span>, du <span style="color: var(--accent);">routage dynamique</span>, et une <span style="color: var(--accent);">redondance</span>, assurant fiabilité et robustesse.</li>
+                <li>Configuration de services critiques tels que <span style="color: var(--accent);">DHCP</span>, <span style="color: var(--accent);">DNS</span>, <span style="color: var(--accent);">VPN</span> et <span style="color: var(--accent);">Active Directory</span>, indispensables pour les opérations réseau.</li>
+                <li>Mise en œuvre d’une <span style="color: var(--accent);">gestion de projet rigoureuse</span> à travers des outils collaboratifs et une organisation structurée.</li>
+            </ul>
+    
+            <p><strong><span style="color: var(--accent);">🗂️ Gestion de Projet et Organisation :</span></strong></p>
+            <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+                <li>Création et gestion d’un <span style="color: var(--accent);">Trello</span> pour offrir une <span style="color: var(--accent);">visualisation claire</span> et partagée des tâches, jalons et priorités du projet.</li>
+                <li>Animation de <span style="color: var(--accent);">réunions quotidiennes</span> pour évaluer l’avancement de l’équipe, identifier les blocages, et ajuster les objectifs journaliers en conséquence.</li>
+                <li>Définition d’<span style="color: var(--accent);">objectifs journaliers</span> pour chaque membre, permettant de rester alignés sur les délais tout en respectant les exigences du projet.</li>
+            </ul>
+    
+            <p><strong><span style="color: var(--accent);">🔧 Compétences Mobilisées et Développées :</span></strong></p>
+            <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+                <li><strong>Administration système avancée :</strong> Gestion sur des environnements <span style="color: var(--accent);">Windows Server</span> et <span style="color: var(--accent);">Linux</span>.</li>
+                <li><strong>Gestion collaborative :</strong> Pilotage de projet avec une <span style="color: var(--accent);">méthodologie agile</span>, favorisant la communication et la productivité.</li>
+                <li><strong>Anticipation et priorisation :</strong> Planification efficace des tâches dans un contexte où la pression des délais était omniprésente.</li>
+            </ul>
+    
+            <p><strong><span style="color: var(--accent);">🚀 Défis et Enseignements :</span></strong></p>
+            <p>Avec seulement <span style="color: var(--accent);">5 jours</span> pour réaliser ce projet ambitieux, le défi était de taille. La <span style="color: var(--accent);">gestion d’équipe</span> et la <span style="color: var(--accent);">coordination des tâches</span> ont été des éléments clés pour surmonter ces contraintes. Cette expérience m’a appris à naviguer dans des <span style="color: var(--accent);">environnements complexes</span>, à organiser efficacement le travail en équipe, et à maintenir un cap clair malgré les imprévus.</p>
+    
+            <p><strong><span style="color: var(--accent);">📌 Conclusion :</span></strong></p>
+            <p>Ce projet représente une étape essentielle de mon parcours, combinant <span style="color: var(--accent);">compétences techniques</span> et <span style="color: var(--accent);">expérience en gestion de projet</span>. Il m’a non seulement permis de consolider mes connaissances, mais aussi de me préparer à relever des défis similaires dans des <span style="color: var(--accent);">environnements professionnels</span>.</p>
+         <!-- Carrousel des images pour le projet 4 -->
+         <div class="carousel-container" style="position: relative; overflow: hidden; border-radius: 10px; margin-top: 20px;">
+            <div class="carousel-images" id="carouselImagesProjet4" style="display: flex; transition: transform 0.5s ease-in-out;">
+                <img src="Projet4-1.jpg" alt="Illustration du projet 4 - Image 1" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+                <img src="Projet4-2.jpg" alt="Illustration du projet 4 - Image 2" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+            </div>
+            <!-- Boutons de navigation (optionnels) -->
+            <button class="carousel-button carousel-button-prev" onclick="prevSlideProjet4()" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10094;</button>
+            <button class="carousel-button carousel-button-next" onclick="nextSlideProjet4()" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10095;</button>
+        </div>
+        </div>
+    </div>
+    
+    
+    <!-- Popup Projet 5 -->
+<div class="popup" id="popupProjet5" style="background-color: #1a1a1a; color: var(--text); border: 1px solid var(--accent); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.9);">
+    <div class="popup-header" style="border-bottom: 1px solid var(--accent); padding-bottom: 10px;">
+        <span class="popup-title">🎓 Une visite inspirante à Télécom Paris</span>
+        <button class="popup-close" onclick="closePopup()" style="background: none; border: none; color: var(--accent); font-size: 1.5rem; cursor: pointer;">&times;</button>
+    </div>
+    <div class="popup-content" style="overflow-y: auto; max-height: 70vh; padding: 20px;">
+        <p>Cette visite m’a ouvert les yeux sur de nouvelles perspectives pour mon avenir !</p>
+        
+        <p><strong><span style="color: var(--accent);">🔎 Contexte :</span></strong></p>
+        <p>Dans le cadre d’un voyage scolaire organisé par mon établissement, j’ai eu la chance de visiter Télécom Paris, une école d’ingénieurs de renom dans les domaines des réseaux et télécommunications. Cette journée a été l’occasion de plonger dans un environnement d’innovation et d’en apprendre davantage sur les opportunités offertes par une telle institution.</p>
+        
+        <p><strong><span style="color: var(--accent);">🚀 Ce que cette visite m’a apporté :</span></strong></p>
+        <ul style="margin-left: 20px; list-style-type: disc; line-height: 1.8;">
+            <li><strong>Une immersion dans un environnement d’excellence :</strong> J’ai découvert des infrastructures impressionnantes, des laboratoires innovants et des projets étudiants ambitieux qui m’ont montré comment la théorie peut se transformer en applications concrètes.</li>
+            <li><strong>Des parcours d’études inspirants :</strong> Une présentation des différents programmes et spécialités de l’école, notamment en cybersécurité, big data et intelligence artificielle, m’a permis d’envisager de nouvelles perspectives pour ma propre orientation.</li>
+            <li><strong>Un échange avec les étudiants :</strong> Comprendre leur quotidien, leurs projets et leurs aspirations m’a motivé à continuer à développer mes compétences techniques et à envisager de poursuivre mes études dans une école d’ingénieurs.</li>
+        </ul>
+        
+        <p><strong><span style="color: var(--accent);">💡 Ce que je retiens de cette expérience :</span></strong></p>
+        <p>Cette visite m’a permis de mieux appréhender les défis et les opportunités dans le secteur des télécommunications. J’ai réalisé à quel point il est important de cultiver des compétences pointues, tout en participant à des projets collaboratifs pour développer une vision élargie du monde professionnel.</p>
+        
+        <p><strong><span style="color: var(--accent);">🙏 Remerciements :</span></strong></p>
+        <p>Un grand merci à Télécom Paris pour leur accueil et pour cette expérience mémorable qui renforce mes ambitions dans le domaine des réseaux et télécommunications.</p>
+    <!-- Carrousel des images pour le projet 5 -->
+    <div class="carousel-container" style="position: relative; overflow: hidden; border-radius: 10px; margin-top: 20px;">
+        <div class="carousel-images" id="carouselImagesProjet5" style="display: flex; transition: transform 0.5s ease-in-out;">
+            <img src="Projet5-1.jpg" alt="Illustration du projet 5 - Image 1" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+            <img src="Projet5-2.jpg" alt="Illustration du projet 5 - Image 2" style="flex: 0 0 100%; object-fit: cover; width: 100%; height: auto;">
+        </div>
+        <!-- Boutons de navigation (optionnels) -->
+        <button class="carousel-button carousel-button-prev" onclick="prevSlideProjet5()" style="position: absolute; top: 50%; left: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10094;</button>
+        <button class="carousel-button carousel-button-next" onclick="nextSlideProjet5()" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(255, 102, 0, 0.7); color: white; border: none; font-size: 1.5rem; padding: 10px; cursor: pointer; z-index: 10;">&#10095;</button>
+    </div>
+    </div>
+</div>
+    
+
+    <script>
+        const carouselImages = document.getElementById('carouselImages');
+        let currentIndex = 0;
+
+        function openPopup(popupId) {
+            document.getElementById(popupId).classList.add('active');
+            document.getElementById('popupOverlay').classList.add('active');
+        }
+
+        function closePopup() {
+            document.querySelectorAll('.popup').forEach(popup => popup.classList.remove('active'));
+            document.getElementById('popupOverlay').classList.remove('active');
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % carouselImages.children.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + carouselImages.children.length) % carouselImages.children.length;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const width = carouselImages.children[0].clientWidth;
+            carouselImages.style.transform = `translateX(-${currentIndex * width}px)`;
+        }
+
+        window.addEventListener('resize', updateCarousel);
+
+        function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('active');
+}
+
+// Initialisation des variables pour le carrousel
+const carouselImagesProjet2 = document.getElementById('carouselImagesProjet2');
+    let currentIndexProjet2 = 0;
+
+    // Fonction pour passer à l'image suivante
+    function nextSlideProjet2() {
+        currentIndexProjet2 = (currentIndexProjet2 + 1) % carouselImagesProjet2.children.length;
+        updateCarouselProjet2();
+    }
+
+    // Fonction pour revenir à l'image précédente
+    function prevSlideProjet2() {
+        currentIndexProjet2 = (currentIndexProjet2 - 1 + carouselImagesProjet2.children.length) % carouselImagesProjet2.children.length;
+        updateCarouselProjet2();
+    }
+
+    // Fonction pour mettre à jour l'affichage du carrousel
+    function updateCarouselProjet2() {
+        const width = carouselImagesProjet2.children[0].clientWidth;
+        carouselImagesProjet2.style.transform = `translateX(-${currentIndexProjet2 * width}px)`;
+    }
+
+    // Fonction pour démarrer le défilement automatique
+    function autoSlideProjet2() {
+        setInterval(() => {
+            nextSlideProjet2();
+        }, 3000); // Changer d'image toutes les 3 secondes
+    }
+
+    // Appeler le défilement automatique lorsque la page est chargée
+    window.addEventListener('load', autoSlideProjet2);
+
+    // Mettre à jour le carrousel lors du redimensionnement de la fenêtre
+    window.addEventListener('resize', updateCarouselProjet2);
+ // Initialisation des variables pour le carrousel du projet 3
+ const carouselImagesProjet3 = document.getElementById('carouselImagesProjet3');
+    let currentIndexProjet3 = 0;
+
+    // Fonction pour passer à l'image suivante
+    function nextSlideProjet3() {
+        currentIndexProjet3 = (currentIndexProjet3 + 1) % carouselImagesProjet3.children.length;
+        updateCarouselProjet3();
+    }
+
+    // Fonction pour revenir à l'image précédente
+    function prevSlideProjet3() {
+        currentIndexProjet3 = (currentIndexProjet3 - 1 + carouselImagesProjet3.children.length) % carouselImagesProjet3.children.length;
+        updateCarouselProjet3();
+    }
+
+    // Fonction pour mettre à jour l'affichage du carrousel
+    function updateCarouselProjet3() {
+        const width = carouselImagesProjet3.children[0].clientWidth;
+        carouselImagesProjet3.style.transform = `translateX(-${currentIndexProjet3 * width}px)`;
+    }
+
+    // Fonction pour démarrer le défilement automatique
+    function autoSlideProjet3() {
+        setInterval(() => {
+            nextSlideProjet3();
+        }, 3000); // Changer d'image toutes les 3 secondes
+    }
+
+    // Appeler le défilement automatique lorsque la page est chargée
+    window.addEventListener('load', autoSlideProjet3);
+
+    // Mettre à jour le carrousel lors du redimensionnement de la fenêtre
+    window.addEventListener('resize', updateCarouselProjet3);
+     // Initialisation des variables pour le carrousel du projet 4
+     const carouselImagesProjet4 = document.getElementById('carouselImagesProjet4');
+    let currentIndexProjet4 = 0;
+
+    // Fonction pour passer à l'image suivante
+    function nextSlideProjet4() {
+        currentIndexProjet4 = (currentIndexProjet4 + 1) % carouselImagesProjet4.children.length;
+        updateCarouselProjet4();
+    }
+
+    // Fonction pour revenir à l'image précédente
+    function prevSlideProjet4() {
+        currentIndexProjet4 = (currentIndexProjet4 - 1 + carouselImagesProjet4.children.length) % carouselImagesProjet4.children.length;
+        updateCarouselProjet4();
+    }
+
+    // Fonction pour mettre à jour l'affichage du carrousel
+    function updateCarouselProjet4() {
+        const width = carouselImagesProjet4.children[0].clientWidth;
+        carouselImagesProjet4.style.transform = `translateX(-${currentIndexProjet4 * width}px)`;
+    }
+
+    // Fonction pour démarrer le défilement automatique
+    function autoSlideProjet4() {
+        setInterval(() => {
+            nextSlideProjet4();
+        }, 3000); // Changer d'image toutes les 3 secondes
+    }
+
+    // Appeler le défilement automatique lorsque la page est chargée
+    window.addEventListener('load', autoSlideProjet4);
+
+    // Mettre à jour le carrousel lors du redimensionnement de la fenêtre
+    window.addEventListener('resize', updateCarouselProjet4);
+     // Initialisation des variables pour le carrousel du projet 5
+     const carouselImagesProjet5 = document.getElementById('carouselImagesProjet5');
+    let currentIndexProjet5 = 0;
+
+    // Fonction pour passer à l'image suivante
+    function nextSlideProjet5() {
+        currentIndexProjet5 = (currentIndexProjet5 + 1) % carouselImagesProjet5.children.length;
+        updateCarouselProjet5();
+    }
+
+    // Fonction pour revenir à l'image précédente
+    function prevSlideProjet5() {
+        currentIndexProjet5 = (currentIndexProjet5 - 1 + carouselImagesProjet5.children.length) % carouselImagesProjet5.children.length;
+        updateCarouselProjet5();
+    }
+
+    // Fonction pour mettre à jour l'affichage du carrousel
+    function updateCarouselProjet5() {
+        const width = carouselImagesProjet5.children[0].clientWidth;
+        carouselImagesProjet5.style.transform = `translateX(-${currentIndexProjet5 * width}px)`;
+    }
+
+    // Fonction pour démarrer le défilement automatique
+    function autoSlideProjet5() {
+        setInterval(() => {
+            nextSlideProjet5();
+        }, 3000); // Changer d'image toutes les 3 secondes
+    }
+
+    // Appeler le défilement automatique lorsque la page est chargée
+    window.addEventListener('load', autoSlideProjet5);
+
+    // Mettre à jour le carrousel lors du redimensionnement de la fenêtre
+    window.addEventListener('resize', updateCarouselProjet5);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

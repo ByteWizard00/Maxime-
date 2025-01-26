@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxime Redouté | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --accent: #FF6B00;
+            --secondary: #333333;
+            --spacing: clamp(50px, 5vw, 100px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .nav {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .nav-item {
+            width: 10px;
+            height: 10px;
+            background: var(--secondary);
+            border-radius: 50%;
+            margin: 20px 0;
+            transition: 0.3s ease;
+            position: relative;
+        }
+
+        .nav-item.active {
+            background: var(--accent);
+            transform: scale(1.5);
+        }
+
+        .nav-label {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text);
+            font-size: 14px;
+            opacity: 0;
+            transition: 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-item:hover .nav-label {
+            opacity: 1;
+            right: 25px;
+        }
+
+        section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--spacing) 20px;
+            gap: 2rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            color: var(--accent);
+            margin-bottom: 2rem;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 8rem);
+            line-height: 1;
+            margin-bottom: 2rem;
+            mix-blend-mode: difference;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            color: var(--accent);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.8s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about {
+            padding: var(--spacing);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .presentation {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .presentation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .presentation p {
+            margin-bottom: 1.5rem;
+        }
+
+        .presentation strong {
+            color: var(--accent);
+        }
+
+        .presentation ul {
+            list-style: none;
+            margin: 1.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .presentation li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .presentation li::before {
+            content: "\2022";
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+        }
+
+        .scroll-text {
+            position: absolute;
+            bottom: var(--spacing);
+            left: var(--spacing);
+            transform: rotate(-90deg) translateX(-100%);
+            transform-origin: left;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+            animation-delay: 0.5s;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 2rem;
+        }
+
+        .skills-card {
+            height: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .skills-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skills-category {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        .skills-card ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .skills-card ul li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .skills-card ul li::before {
+            content: "\2022";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .skills-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Barre de navigation principale */
+        .main-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg);
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .main-nav-item {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .main-nav-item:hover {
+            color: var(--accent);
+        }
+
+        .main-hamburger {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--text);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .main-hamburger:focus {
+            outline: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-nav-links {
+                display: none;
+                flex-direction: column;
+                background-color: var(--bg);
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                width: 200px;
+                padding: 10px;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            }
+
+            .main-nav-links.active {
+                display: flex;
+            }
+
+            .main-hamburger {
+                display: block;
+            }
+        }
+        .download-cv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem; /* Réduit l'espace entre le CV et le contact */
+    padding: var(--spacing) 20px;
+}
+
+.cv-container {
+    margin-top: 1rem;
+}
+
+.cv-button {
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text);
+    background-color: var(--accent);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.cv-button:hover {
+    background-color: #e65b00;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+.contact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0; /* Supprime l'espace supplémentaire en haut */
+    padding: var(--spacing) 20px;
+    text-align: center;
+}
+
+
+.contact-container {
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
+.contact-email {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.contact-email:hover {
+    color: #e65b00;
+    text-decoration: underline;
+}
+
+
+    </style>
+</head>
+<body>
+    <nav class="main-navbar">
+        <ul class="main-nav-links">
+            <li><a href="projets.html" class="main-nav-item">Projets</a></li>
+            <li><a href="entrepise.html" class="main-nav-item">Entreprise</a></li>
+        </ul>
+        <button class="main-hamburger" onclick="toggleMainMenu()">☰</button>
+    </nav>
+
+    
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Maxime<br>Redouté</h1>
+            <p class="hero-subtitle">Etudiant Réseaux & Télécommunications</p>
+        </div>
+        <div class="scroll-text">Scroll pour découvrir</div>
+    </section>
+
+    <section class="about">
+        <h2 class="section-title">À propos</h2>
+        <div class="presentation">
+            <p><strong>Bienvenue sur mon portfolio !</strong></p>
+            <p>Je suis <strong>Maxime Redouté</strong>, étudiant en 3ᵐ année de <strong>BUT Réseaux et Télécommunications</strong> à l'IUT de <strong>Montbéliard</strong>, avec une spécialisation dans le parcours <strong>PILPRO</strong> (Pilotage de Projets et Polyvalence). Passionné par le domaine des réseaux, j'ai choisi ce parcours pour enrichir mes compétences techniques tout en développant des bases solides en gestion de projets et management, afin de devenir un professionnel polyvalent et adapté aux besoins actuels.</p>
+            <p>Depuis ma 2ᵉ année, j'évolue en alternance chez <strong>Orange</strong> en tant que <strong>Technicien Réseau Structurant</strong>. Ce rôle me permet d'intervenir sur plusieurs aspects clés du réseau :</p>
+            <ul>
+                <li>🔧 <strong>Configuration d'équipements réseau</strong>, notamment des routeurs 5G, adaptés aux besoins des clients et des infrastructures.</li>
+                <li>🛠️ <strong>Installation sur site</strong> des équipements configurés, que ce soit chez les clients ou dans des infrastructures Orange.</li>
+                <li>🔧 <strong>Maintenance et supervision</strong> des réseaux et des équipements, garantissant leur bon fonctionnement.</li>
+            </ul>
+            <p><strong>Mes atouts :</strong></p>
+            <ul>
+                <li>Une <strong>grande curiosité</strong> pour les nouvelles technologies et une envie constante d'apprendre.</li>
+                <li>Un travail rigoureux et un <strong>sens des responsabilités</strong>.</li>
+                <li>Une forte motivation à relever des défis techniques tout en explorant des domaines innovants.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="skills">
+        <h2 class="section-title">Compétences</h2>
+        <div class="skills-container">
+            <div class="skills-card">
+                <h3 class="skills-category">Réseaux et Télécommunications</h3>
+                <ul>
+                    <li>🌐 <strong>Conception et administration de réseaux :</strong> maîtrise des bases de la topologie réseau, des protocoles (TCP/IP, OSPF, BGP) et des infrastructures réseau modernes.</li>
+                    <li>📡 <strong>Technologies sans fil :</strong> configuration et optimisation de points d'accès Wi-Fi, et gestion des réseaux 4G/5G pour clients et infrastructures.</li>
+                    <li>🛠️ <strong>Déploiement matériel :</strong> installation et configuration d'équipements comme routeurs, switches, et équipements clients.</li>
+                    <li>🔧 <strong>Maintenance des infrastructures :</strong> diagnostic, dépannage et suivi des performances des équipements réseau.</li>
+                    <li>🛡️ <strong>Cybersécurité réseau :</strong> bases de la sécurisation des infrastructures (pare-feu, VPN, authentification RADIUS).</li>
+                </ul>
+            </div>
+
+            <div class="skills-card">
+                <h3 class="skills-category">Gestion de Projets (Parcours PILPRO)</h3>
+                <ul>
+                    <li>🗃️ <strong>Méthodologie de gestion de projets :</strong> organisation des tâches, priorisation et suivi des objectifs.</li>
+                    <li>🔍 <strong>Analyse des besoins :</strong> compréhension des enjeux techniques et opérationnels pour répondre aux attentes des clients ou des projets internes.</li>
+                    <li>🕑 <strong>Respect des délais et contraintes :</strong> planification rigoureuse et gestion des imprévus.</li>
+                    <li>🤝 <strong>Travail collaboratif et leadership :</strong> coordination d'équipes et communication efficace pour mener à bien les projets techniques.</li>
+                </ul>
+            </div>
+
+            <div class="skills-card">
+                <h3 class="skills-category">Compétences Transversales</h3>
+                <ul>
+                    <li>🖥️ <strong>Outils et technologies :</strong>
+                        <ul>
+                            <li>Logiciels : Cisco Packet Tracer, Wireshark, MRTG, DD-WRT.</li>
+                            <li>Systèmes : supervision des réseaux, analyse des performances.</li>
+                        </ul>
+                    </li>
+                    <li>🔗 <strong>Câblage et liaison :</strong> expérience pratique en installation cuivre et fibre optique.</li>
+                    <li>🔄 <strong>Polyvalence technique :</strong> capacité à intervenir sur des aspects variés, de la configuration réseau à la gestion de projets.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="download-cv">
+        <h2 class="section-title">Voir mon CV</h2>
+        <div class="cv-container">
+            <a href="Redouté-Maxime-CV.pdf" download class="cv-button">Télécharger mon CV</a>
+        </div>
+    </section>
+   
+   
+   
+    <section class="contact">
+        <h2 class="section-title">Me Contacter</h2>
+        <div class="contact-container">
+            <p>Pour toute question ou collaboration, vous pouvez me contacter à l'adresse suivante :</p>
+            <a href="mailto:maxime.redoute@edu.univ-fcomte.fr" class="contact-email">maxime.redoute@edu.univ-fcomte.fr</a>
+        </div>
+    </section>
+    
+
+    <script>
+        // Animation de la présentation au scroll
+        window.addEventListener('scroll', () => {
+            const presentation = document.querySelector('.presentation');
+            const sectionTitles = document.querySelectorAll('.section-title');
+            const skillsCards = document.querySelectorAll('.skills-card');
+            const screenPosition = window.innerHeight / 1.3;
+
+            // Apparition des sections avec les titres
+            sectionTitles.forEach((title) => {
+                if (title.getBoundingClientRect().top < screenPosition) {
+                    title.classList.add('visible');
+                }
+            });
+
+            // Apparition des compétences
+            if (presentation.getBoundingClientRect().top < screenPosition) {
+                presentation.classList.add('visible');
+            }
+
+            skillsCards.forEach((card) => {
+                if (card.getBoundingClientRect().top < screenPosition) {
+                    card.classList.add('visible');
+                }
+            });
+        });
+
+        // Gestion de l'état actif
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - sectionHeight / 3) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach((item) => {
+                item.classList.remove('active');
+                if (item.classList.contains(current)) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        function toggleMainMenu() {
+            const navLinks = document.querySelector('.main-nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
